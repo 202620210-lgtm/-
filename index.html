@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Re:Cycle - 분리수거 도우미</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f8f2;
+      text-align: center;
+      padding: 30px 15px;
+      color: #244b35;
+    }
+    .app {
+      max-width: 420px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      border: 0;
+      border-radius: 12px;
+      background: #25834b;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 15px;
+      border-radius: 12px;
+    }
+    #preview { display: none; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>♻️ Re:Cycle</h1>
+    <p>쓰레기 사진을 찍거나 올려보세요!</p>
+
+    <label for="camera">
+      <button type="button">📷 카메라로 촬영하기</button>
+    </label>
+    <input id="camera" type="file"
+      accept="image/*" capture="environment"
+      hidden>
+
+    <label for="upload">
+      <button type="button">🖼️ 사진 업로드하기</button>
+    </label>
+    <input id="upload" type="file"
+      accept="image/*" hidden>
+
+    <img id="preview" alt="선택한 쓰레기 사진">
+    <p id="message">사진을 선택해 주세요.</p>
+  </div>
+
+  <script>
+    const camera = document.getElementById("camera");
+    const upload = document.getElementById("upload");
+    const preview = document.getElementById("preview");
+    const message = document.getElementById("message");
+
+    function showPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        message.textContent = "이미지 파일을 선택해 주세요.";
+        return;
+      }
+
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+      message.textContent = "사진이 등록되었어요!";
+    }
+
+    camera.addEventListener("change", showPhoto);
+    upload.addEventListener("change", showPhoto);
+  </script>
+</body>
+</html>
